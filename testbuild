@@ -1,1 +1,280 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
 
+//function declarations
+void intro();
+void foyer();
+void stairwell();
+void library();
+void music_room();
+void office();
+void kitchen();
+void living_room();
+void tryDoor();
+void basement();
+void dining_room();
+void redherring1();
+void redherring2();
+
+//global conditions
+bool hasKey = false;
+bool booksSwapped = false;
+
+int main() {
+    intro();
+    foyer();
+    return 0;
+}
+
+//intro
+void intro() {
+    cout << "---------------------------------------------------\n";
+    cout << "     WELCOME TO THE HAUNTED HOUSE ADVENTURE\n";
+    cout << "---------------------------------------------------\n\n";
+    cout << "It's a dark Halloween night. You are a high school student named Alex.\n"
+        << "Your friends dared you to step into the old haunted mansion on the hill.\n"
+        << "You gather your courage and open the front door...\n"
+        << "*CREAK*\n"
+        << "You step inside and the door slams shut behind you!\n"
+        << "A ghostly lock appears on the door. You must find the key to escape.\n\n";
+}
+
+//foyer
+void foyer() {
+    bool looked = false;
+    string choice;
+    while (true) {
+        cout << "\nYou are in the FOYER.\n";
+        cout << "What would you like to do?\n";
+        if (!looked) cout << "1. Look around\n";
+        cout << "2. Try the front door\n";
+        if (looked) {
+            cout << "3. Enter kitchen\n";
+            cout << "4. Enter stairwell\n";
+            cout << "5. Enter living room\n";
+        }
+        cout << "Choice: ";
+        getline(cin, choice);
+
+        if (choice == "1" && !looked) {
+            looked = true;
+            cout << "You see several doors leading to different rooms.\n";
+        } else if (choice == "2") {
+            tryDoor();
+        } else if (choice == "3" && looked) {
+            kitchen();
+        } else if (choice == "4" && looked) {
+            stairwell();
+            break;
+        } else if (choice == "5" && looked) {
+            living_room();
+        } else {
+            cout << "Invalid choice.\n";
+        }
+    }
+}
+
+//stairwell
+void stairwell() {
+    string choice;
+    cout << "\nYou are in the STAIRWELL.\n";
+    while (true) {
+        cout << "What would you like to do?\n";
+        cout << "1. Go up to the library\n";
+        cout << "2. Return to foyer\n";
+        cout << "Choice: ";
+        getline(cin, choice);
+
+        if (choice == "1") {
+            library();
+            break;
+        } else if (choice == "2") {
+            foyer();
+            break;
+        } else {
+            cout << "Invalid choice.\n";
+        }
+    }
+}
+
+//try front door
+void tryDoor() {
+    if (hasKey) {
+        cout << "You unlock the door and escape the haunted house!\n";
+        exit(0);
+    } else {
+        cout << "The door is sealed by magic. You need a key.\n";
+    }
+}
+
+//kitchen
+void kitchen() {
+    bool looked = false;
+    string choice;
+    while (true) {
+        cout << "\nYou are in the KITCHEN.\n";
+        cout << "What would you like to do?\n";
+        if (!looked) cout << "1. Look around\n";
+        cout << "2. Return to foyer\n";
+        cout << "Choice: ";
+        getline(cin, choice);
+
+        if (choice == "1" && !looked) {
+            looked = true;
+            cout << "\n";
+        } else if (choice == "2") {
+            foyer();
+            break;
+        } else {
+            cout << "Invalid choice.\n";
+        }
+    }
+}
+
+//living Room
+void living_room() {
+    bool looked = false;
+    string choice;
+    while (true) {
+        cout << "\nYou are in the LIVING ROOM.\n";
+        cout << "What would you like to do?\n";
+        if (!looked) cout << "1. Look around\n";
+        cout << "2. Return to foyer\n";
+        cout << "Choice: ";
+        getline(cin, choice);
+
+        if (choice == "1" && !looked) {
+            looked = true;
+        } else if (choice == "2") {
+            foyer();
+            break;
+        } else {
+            cout << "Invalid choice.\n";
+        }
+    }
+}
+
+//library
+void library() {
+    bool looked = false;
+    string choice;
+    string redBook = "Red";
+    string blueBook = "Blue";
+
+    while (true) {
+        cout << "\nYou are in the LIBRARY.\n";
+        cout << "What would you like to do?\n";
+        if (!looked) cout << "1. Look around\n";
+        if (looked && !booksSwapped) cout << "2. Swap the red and blue books\n";
+        if (booksSwapped) cout << "2. Enter music room\n";
+        if (looked) {
+            cout << "3. Enter office\n";
+            cout << "4. Return to stairwell\n";
+        }
+        cout << "Choice: ";
+        getline(cin, choice);
+
+        if (choice == "1" && !looked) {
+            looked = true;
+            cout << "You notice two odd books: one red and one blue.\n";
+            cout << "An inscription reads:\n";
+            cout << "\"When red and blue change their view, a secret will appear to you.\"\n";
+        } else if (choice == "2" && looked && !booksSwapped) {
+            cout << "You swap the red and blue books on the shelf.\n";
+            swap(redBook, blueBook);
+            if (redBook != "Red") {
+                booksSwapped = true;
+                cout << "The bookshelf trembles... a secret passage opens to the MUSIC ROOM!\n";
+            } else {
+                cout << "Nothing seems to happen.\n";
+            }
+        } else if (choice == "2" && booksSwapped) {
+            music_room();
+            break;
+        } else if (choice == "3" && looked) {
+            office();
+            break;
+        } else if (choice == "4" && looked) {
+            stairwell();
+            break;
+        } else {
+            cout << "Invalid choice.\n";
+        }
+    }
+}
+
+// Office
+void office() {
+    bool looked = false;
+    string choice;
+    while (true) {
+        cout << "\nYou are in the OFFICE.\n";
+        cout << "What would you like to do?\n";
+        if (!looked) cout << "1. Look around\n";
+        cout << "2. Return to library\n";
+        cout << "Choice: ";
+        getline(cin, choice);
+
+        if (choice == "1" && !looked) {
+            looked = true;
+            cout << "\n";
+        } else if (choice == "2") {
+            library();
+            break;
+        } else {
+            cout << "Invalid choice.\n";
+        }
+    }
+}
+
+//music Room with note puzzle
+void music_room() {
+    bool looked = false;
+    bool puzzleSolved = false;
+    string choice;
+    string userInput;
+    const string correctSequence = "CDEFG";
+
+    while (true) {
+        cout << "\nYou are in the MUSIC ROOM.\n";
+        cout << "A grand piano sits at the center. There's a small sealed box sitting atop the piano.\n";
+        cout << "What would you like to do?\n";
+        if (!looked) {
+            cout << "1. Look at the piano and box\n";
+        }
+        if (looked && !puzzleSolved) {
+            cout << "2. Play a sequence of notes\n";
+            cout << "3. Return to library\n";
+        }
+        if (puzzleSolved) {
+            cout << "1. Return to library\n";
+        }
+        cout << "Choice: ";
+        getline(cin, choice);
+
+        if (choice == "1" && !looked) {
+            looked = true;
+            cout << "You examine the piano. A note on the box reads:\n";
+            cout << "\"Only the right melody will grant the key. Five notes to harmony.\"\n";
+            cout << "You suspect you need to play a specific sequence of 5 musical notes (A-G).\n";
+        } else if (choice == "2" && looked && !puzzleSolved) {
+            cout << "Enter 5 notes (e.g., CDEFG): ";
+            getline(cin, userInput);
+
+            if (userInput == correctSequence) {
+                cout << "The box clicks open! Inside, you find a small brass key.\n";
+                hasKey = true;
+                puzzleSolved = true;
+            } else {
+                cout << "Nothing happens. That wasn't the correct sequence.\n";
+            }
+        } else if ((choice == "3" && !puzzleSolved) || (choice == "1" && puzzleSolved)) {
+            library();
+            break;
+        } else {
+            cout << "Invalid choice.\n";
+        }
+    }
+}
