@@ -1,3 +1,7 @@
 6/9/25 Colton - Updated everything here with what I have, sorry Ryan I had to mess with your intro code lol but now the rooms transition without the nesting error for the functions and I swapped it to the number input as you wanted.
   it should be pretty straight forward with importing your code, just follow the examples in the test build, but if you have any questions just communicate here or via email. I still need to finish fleshing out the music room and the
   library but its in a workable state at the moment! Feel free to run the test build and give any thoughts on how it's laid out.
+
+6/10/25
+
+Grace-I mostly completed the dining table. You guys are more than welcome to test it out. I still need to add some descriptions, but the actual functions work perfect.
