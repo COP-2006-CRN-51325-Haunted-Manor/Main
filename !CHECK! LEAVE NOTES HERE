@@ -7,3 +7,8 @@
 Grace-I mostly completed the dining table. You guys are more than welcome to test it out. I still need to add some descriptions, but the actual functions work perfect.
 I'm going to need assistance with some of the debugging, especially with int main(). Also, my descriptions don't pop up when i do the dining room by itself, 
 so i don't know if it will with the rest of the game. 
+
+6/11/25 Colton - Code looks good to me! I see what you mean by the issue with int main() and I think it'll just be a quick matter of changing the code so that it matches the templates of the other rooms. Your code uses int main which
+  works if it was just that room in the coding enviornment, but int main is actually used all the way back up at the start of the code and then we call the rooms via functions declared so I think all I'll need to do is just condense your
+  code into a single function and then add the movement options and it should be good. I'll adjust it later tonight and let you know! Pretty sure this is the same way that me and Ryan tried to do it originally but it ended up getting 
+  messy and the functions started to break and not display things properly, the new movement code we're using is a bit extra specific so it can be a little confusing.
