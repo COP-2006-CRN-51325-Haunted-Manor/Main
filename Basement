@@ -5,7 +5,7 @@ void basement() {
     string choice;
 
     while (true) {
-        cout << "\nYou are in the BASEMENT.\n";
+        cout << "\nYou are in the Basement.\n";
         cout << "The air is damp and filled with the scent of old wood and mildew.\n";
         cout << "It's quiet... too quiet.\n";
         cout << "What would you like to do?\n";
