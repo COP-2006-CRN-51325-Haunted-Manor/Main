@@ -1,0 +1,36 @@
+//office
+void office() {
+    bool looked = false;
+    bool usedOuija = false;
+    string choice;
+
+    while (true) {
+        cout << "\nYou are in the Office.\n";
+        cout << "What would you like to do?\n";
+
+        if (!looked) cout << "1. Look around\n";
+        if (looked && !usedOuija) cout << "2. Sit at the desk and use the Ouija board\n";
+        cout << "3. Return to library\n";
+
+        cout << "Choice: ";
+        getline(cin, choice);
+
+        if (choice == "1" && !looked) {
+            looked = true;
+            cout << "You scan the dimly lit office. Books are stacked tightly on the shelves.\n";
+            cout << "A wooden desk sits in the middle. On top lies an old Ouija board.\n";
+        } else if (choice == "2" && looked && !usedOuija) {
+            usedOuija = true;
+            cout << "You sit at the desk and lightly place your fingers on the planchette.\n";
+            cout << "The room grows colder...\n";
+            cout << "Suddenly, the planchette begins to move on its own...\n";
+            cout << "It spells out: \"T-H-E   C-H-O-R-D   I-S   C.\"\n";
+            cout << "You feel a shiver run down your spine.\n";
+        } else if (choice == "3") {
+            library();
+            break;
+        } else {
+            cout << "Invalid choice.\n";
+        }
+    }
+}
