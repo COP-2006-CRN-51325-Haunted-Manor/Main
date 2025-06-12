@@ -23,6 +23,9 @@ void lookAround() {
         <<"You touch the picture to rub off some of the dust and a cold chill comes over your shoulder and down your back.\n";
     cout<<"After some of the dust is wiped off, you note that the chairs are in a certain order. The picture looks odd because its a top down view of the dining table.\n";
     cout<<"There are two chairs, one at each head of the table, with dusty arm rests.\n";
+cout<<"You count going counter clockwise, from the top of the table, starting from 1. You count 8 chairs. From your count, chairs 1 and 5 are at the heads of the tables [captain chairs]. 2,3,4,6,7,8 are surround them.\n";
+    cout<<"You take note that chair 2, 5 and 8 are missing their plate settings and 8 is the chair you see pushed against the window. You know it's 8, because 7 is still in it's spot.\n";
+    cout<<"But, you look back at the scene in front of you and realize that if you want to find out how to escape, you need to put them in the right order [Hint: most of the chairs are in the moved from their original spot].";
     hasLooked = true;
 
 }
