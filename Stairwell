@@ -25,7 +25,7 @@ void stairwell() {
         if (attempts == 3 && !slideTriggered && choice == "1") {
             cout << "You turn around slowly...\n";
             cout << "Suddenly, the floor gives way beneath you!\n";
-            cout << "You slide down a dark chute and land with a thud in the BASEMENT.\n";
+            cout << "You slide down a dark chute and land with a thud in the Basement.\n";
             slideTriggered = true;
             basement();  // Send to basement
             break;
