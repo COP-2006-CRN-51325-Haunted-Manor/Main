@@ -80,18 +80,43 @@ void foyer() {
 //stairwell
 void stairwell() {
     string choice;
-    cout << "\nYou are in the STAIRWELL.\n";
+    int attempts = 0;
+    bool slideTriggered = false;
+
+    cout << "\nYou are in the Stairwell.\n";
+
     while (true) {
+        attempts++;
         cout << "What would you like to do?\n";
-        cout << "1. Go up to the library\n";
-        cout << "2. Return to foyer\n";
+
+        if (attempts == 3 && !slideTriggered) {
+            cout << "1. Look back\n";
+            cout << "2. Try to go up to the library\n";
+            cout << "3. Return to foyer\n";
+        } else {
+            cout << "1. Try to go up to the library\n";
+            cout << "2. Return to foyer\n";
+        }
+
         cout << "Choice: ";
         getline(cin, choice);
 
-        if (choice == "1") {
-            library();
+        if (attempts == 3 && !slideTriggered && choice == "1") {
+            cout << "You turn around slowly...\n";
+            cout << "Suddenly, the floor gives way beneath you!\n";
+            cout << "You slide down a dark chute and land with a thud in the Basement.\n";
+            slideTriggered = true;
+            basement();  // Send to basement
             break;
-        } else if (choice == "2") {
+        } else if ((choice == "1" && attempts != 3) || (choice == "2" && attempts == 3 && !slideTriggered)) {
+            if (attempts < 5) {
+                cout << "You try to ascend the stairwell, but a mysterious force stops you.\n";
+            } else {
+                cout << "The force seems to fade... you can now ascend.\n";
+                library();
+                break;
+            }
+        } else if ((choice == "2" && attempts != 3) || (choice == "3" && attempts == 3 && !slideTriggered)) {
             foyer();
             break;
         } else {
@@ -114,26 +139,32 @@ void tryDoor() {
 void kitchen() {
     bool looked = false;
     string choice;
+
     while (true) {
-        cout << "\nYou are in the KITCHEN.\n";
-        cout << "What would you like to do?\n";
+        cout << "\nYou are in the KITCHEN.\n"
+             << "What would you like to do?\n";
+
         if (!looked) cout << "1. Look around\n";
         cout << "2. Return to foyer\n";
-        cout << "Choice: ";
+        cout << "3. Enter the Dining Room\n"
+             << "Choice: ";
+
         getline(cin, choice);
 
         if (choice == "1" && !looked) {
             looked = true;
-            cout << "\n";
+            cout << "You take a closer look at the kitchen, noting its eerie emptiness...\n";
         } else if (choice == "2") {
             foyer();
             break;
+        } else if (choice == "3") {
+            dining_room();
+            break;
         } else {
-            cout << "Invalid choice.\n";
+            cout << "Invalid choice. Try again.\n";
         }
     }
 }
-
 //living Room
 void living_room() {
     bool looked = false;
@@ -142,13 +173,17 @@ void living_room() {
         cout << "\nYou are in the LIVING ROOM.\n";
         cout << "What would you like to do?\n";
         if (!looked) cout << "1. Look around\n";
-        cout << "2. Return to foyer\n";
+        cout << "2. Enter the basement\n";
+        cout << "3. Return to foyer\n";
         cout << "Choice: ";
         getline(cin, choice);
 
         if (choice == "1" && !looked) {
             looked = true;
         } else if (choice == "2") {
+            basement();
+            break;
+        } else if (choice == "3") {
             foyer();
             break;
         } else {
@@ -156,7 +191,44 @@ void living_room() {
         }
     }
 }
+//basement
+void basement() {
+    bool looked = false;
+    bool petCat = false;
+    string choice;
 
+    while (true) {
+        cout << "\nYou are in the Basement.\n";
+        cout << "The air is damp and filled with the scent of old wood and mildew.\n";
+        cout << "It's quiet... too quiet.\n";
+        cout << "What would you like to do?\n";
+
+        if (!looked) cout << "1. Look around\n";
+        if (looked && !petCat) cout << "2. Pet the cat\n";
+        if (looked) cout << "3. Enter the old door\n";
+
+        cout << "Choice: ";
+        getline(cin, choice);
+
+        if (choice == "1" && !looked) {
+            looked = true;
+            cout << "As your eyes adjust to the darkness, you spot glowing eyes behind a dusty shelf.\n";
+            cout << "A black cat silently watches you. It doesn't seem to move by your sight....\n";
+            cout << "To your right, you now notice an old wooden door partially concealed by shadows.\n";
+        } else if (choice == "2" && looked && !petCat) {
+            petCat = true;
+            cout << "You gently pet the cat. It purrs softly, then lets out a single haunting meow.\n";
+            cout << "Blood red words appear on a cracked mirror nearby. It reads ____G...\n";
+            cout << "Without warning, the cat slips away and vanishes into the darkness.\n";
+        } else if (choice == "3" && looked) {
+            cout << "You open the creaky old door and step through...\n";
+            living_room();
+            break;
+        } else {
+            cout << "Invalid choice.\n";
+        }
+    }
+}
 //library
 void library() {
     bool looked = false;
@@ -205,23 +277,41 @@ void library() {
         }
     }
 }
-
-// Office
+//office
 void office() {
     bool looked = false;
+    bool foundPlanchette = false;
+    bool usedOuija = false;
     string choice;
+
     while (true) {
-        cout << "\nYou are in the OFFICE.\n";
+        cout << "\nYou are in the Office.\n";
         cout << "What would you like to do?\n";
+
         if (!looked) cout << "1. Look around\n";
-        cout << "2. Return to library\n";
+        if (looked && !foundPlanchette) cout << "2. Search the desk drawers\n";
+        if (looked && foundPlanchette && !usedOuija) cout << "3. Sit at the desk and use the Ouija board\n";
+        cout << "4. Return to library\n";
+
         cout << "Choice: ";
         getline(cin, choice);
 
         if (choice == "1" && !looked) {
             looked = true;
-            cout << "\n";
-        } else if (choice == "2") {
+            cout << "You scan the dimly lit office. Books are stacked tightly on the shelves.\n";
+            cout << "A wooden desk sits in the middle. On top lies an old Ouija board, but it seems incomplete...\n";
+        } else if (choice == "2" && looked && !foundPlanchette) {
+            foundPlanchette = true;
+            cout << "You rummage through the desk drawers and find a small triangular planchette with a glass eye.\n";
+            cout << "It looks like it fits perfectly on the Ouija board.\n";
+        } else if (choice == "3" && looked && foundPlanchette && !usedOuija) {
+            usedOuija = true;
+            cout << "You place the planchette on the board and gently rest your fingers on it.\n";
+            cout << "The room grows colder...\n";
+            cout << "Suddenly, the planchette begins to move on its own...\n";
+            cout << "It spells out: \"T-H-E   C-H-O-R-D   I-S   0-0-E-0-0.\"\n";
+            cout << "You feel a shiver run down your spine.\n";
+        } else if (choice == "4") {
             library();
             break;
         } else {
@@ -279,35 +369,65 @@ void music_room() {
         }
     }
 }
+//dining room
+// Function declarations for the chair structures
+struct Chair {
+    int id;
+    int current_position;
+    int correct_position;
+    string special_identifier;
+    bool is_correct; // Tracks if the chair is placed correctly
+};
 
-//Dining Room
-//Functions declaration
-bool hasLooked = false;
-int bulbsLit;
-int newPosition;
-int chairID;
-int chairs;
-moveChair(chairs, chairID, newPosition, bulbsLit);
 
-void dining_room() {
-    std::cout << "You push open the grand dining room doors. A big gust of wind follows you and stirs up all the dust that had settled over the furniture.\n";
-    std::cout << "You can spot massive cobwebs in the corner of the rooms and all over the chandelier that's in the middle of the room. \nYou wonder how long its been since a living soul has stepped into this room.\n";
-    std::cout<<"Besides the chandelier, a table of 8 is set for what looks like a grand dinner.\n Most of the plate settings are still set on the table, but not all of them.\n";
-    std::cout<< "There are 3 plate settings that are strewn about the floor. You question what happened in this house.\n";
-    std::cout<<"You also note that the chairs are askew. One chair is pushed against the window as if someone had attempted to escape.\n";
-    std::cout<<"You have this urge to explore this room, whether to find out more clues about happened, or figure out a way to get out.";
+// This is to initialize the chairs. You have the what's the current position, the correct and any special identifiers.
+void initializeChairs(Chair chairs[]) {
+    chairs[0] = {1, 3, 1, "captain seat with arms", false};
+    chairs[1] = {2, 4, 2, "missing plate setting", false};
+    chairs[2] = {3, 7, 3, "", false};
+    chairs[3] = {4, 2, 4, "", false};
+    chairs[4] = {5, 5, 5, "captain seat with arms", false};
+    chairs[5] = {6, 1, 6, "", false};
+    chairs[6] = {7, 8, 7, "", false};
+    chairs[7] = {8, 6, 8, "missing plate setting, pushed against the window", false};
 }
 
-//The player can look around the room. This is for the purpose of the hint, so the player knows in which order the chairs go in.
-void lookAround() {
-    cout << "\nOn the wall you immediately notice the huge, dusty painting. It looks like the family sitting down in the dining room.\n"
-        <<"You touch the picture to rub off some of the dust and a cold chill comes over your shoulder and down your back.\n";
-    cout<<"After some of the dust is wiped off, you note that the chairs are in a certain order. The picture looks odd because its a top down view of the dining table.\n";
-    cout<<"There are two chairs, one at each head of the table, with dusty arm rests.\n";cout<<"You count going counter clockwise, from the top of the table, starting from 1. You count 8 chairs. From your count, chairs 1 and 5 are at the heads of the tables [captain chairs]. 2,3,4,6,7,8 are surround them.\n";
-    cout<<"You take note that chair 2, 5 and 8 are missing their plate settings and 8 is the chair you see pushed against the window. You know it's 8, because 7 is still in it's spot.\n";
-    cout<<"But, you look back at the scene in front of you and realize that if you want to find out how to escape, you need to put them in the right order [Hint: most of the chairs are in the moved from their original spot].";
-    hasLooked = true;
+//Function to move the chairs. It takes user input.
+void moveChair(Chair chairs[], int chairID, int newPosition, int &bulbsLit) {
+    bool validMove = false;
 
+    for (int i = 0; i < 8; ++i) {
+        if (chairs[i].id == chairID) {
+            chairs[i].current_position = newPosition;
+            validMove = true;
+            cout << "Chair " << chairID << " moved to position " << newPosition << ".\n";
+
+            // Check if it's correctly placed and hasn't already been counted
+            if (chairs[i].current_position == chairs[i].correct_position && !chairs[i].is_correct) {
+                chairs[i].is_correct = true;
+                bulbsLit++; // Light up one more bulb
+                cout << "Chair " << chairID << " is now correctly placed!\n";
+                cout << "A light bulb has lit up on the chandelier! (Bulbs lit: " << bulbsLit << "/8)\n";
+            }
+            break;
+        }
+    }
+
+    if (!validMove) {
+        cout << "Invalid chair ID! Please enter a number between 1 and 8.\n";
+    }
+}
+
+// Check if all chairs are correctly placed
+bool checkAllCorrect(Chair chairs[], int bulbsLit) {
+    for (int i = 0; i < 8; ++i) {
+        if (!chairs[i].is_correct) {
+            return false; // If any chair is incorrect, puzzle is not solved yet
+        }
+    }
+
+    //only trigger completion if all bulbs are lit
+    return (bulbsLit == 8);
 }
 
 //The dining room puzzle
@@ -317,89 +437,83 @@ void lookAround() {
  *If you're looking at a top-down view of the dining table, the chair positions start at 1 and go counter-clockwise, counting to 8.
  * The chair's positions when the player finds them the first time is:
 * Chair 3= chair 1 position, Chair 4=Chair 2 position, Chair 7 = Chair 3 position,	Chair 2 = Chair 4 position,	Chair 5 = Chair 5 position (the only correct one)
-	Chair 1= Chair 6 position, Chair 8 = Chair 7 position, Chair 6 = Chair 8 position
+    Chair 1= Chair 6 position, Chair 8 = Chair 7 position, Chair 6 = Chair 8 position
 
 In addition to the chairs, the chandelier will slowly light up, till it's completely lit up and then slowly fade to blackness.
  */
 
-// Function declarations for the chair structures
-struct Chair {
-    int id;
-    int current_position;
-    int correct_position;
-    std::string special_identifier;
-    bool is_correct; // Track if the chair is already placed correctly
+void dining_room() {
+    //Functions declaration
+    //The player can look around the room. This is for the purpose of the hint, so the player knows in which order the chairs go in.
+    bool looked = false;
+    bool puzzleSolved = false;
+    string choice;
+    Chair chairs[8];
+    int bulbsLit = 0;
+    initializeChairs(chairs);
+    //Entering the dining room. These are the descriptions of the dining room that way the player understands the layout and important info.
+    cout << "\nYou push open the grand dining room doors. A big gust of wind stirs up dust that had settled over the furniture.\n";
+    cout << "Massive cobwebs cover the corners and the chandelier hanging in the middle of the room.\n";
+    cout << "A table of 8 is set for what looks like a grand dinner, but some plate settings have fallen to the floor.\n";
+    cout << "One chair is pushed against the window—as if someone tried to escape.\n";
+    cout << "You feel an eerie urge to uncover the mystery hidden in this room.\n";
 
-};
-
-
-// This is to initialize the chairs. You have the what's the current position, the correct and any special identifiers.
-bool initializeChairs(Chair chairs[8]) {
-    chairs[0] = {1, 3, 1, "captain seat with arms", false}; //One head of the table
-    chairs[1] = {2, 4, 2, "missing plate setting", false};
-    chairs[2] = {3, 7, 3, "", false};
-    chairs[3] = {4, 2, 4, "", false};
-    chairs[4] = {5, 5, 5, "captain seat with arms",false}; //The other head of the table
-    chairs[5] = {6, 1, 6, "",false};
-    chairs[6] = {7, 8, 7, "",false};
-    chairs[7] = {8, 6, 8, "missing plate setting, pushed against the window",false};
-
-
-    //Function to move the chairs. It takes user input.
-    while (true) {
-        std::cout << "\nEnter the chair number (1-8) you want to move: ";
-        int chairID, newPosition;
-
-        std::cin >> chairID;
-        if (std::cin.fail() || chairID < 1 || chairID > 8) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Invalid input! Please enter a valid chair number (1-8).\n";
-            continue;
+    while (!puzzleSolved) {
+        cout << "\nWhat would you like to do?\n";
+        if (!looked) {
+            cout << "1. Look at the painting\n";
         }
+        cout << "2. Move a chair\n";
+        cout << "3. Return to kitchen\n";
+        cout << "Choice: ";
 
-        std::cout << "Enter the new position (1-8): ";
-        std::cin >> newPosition;
-        if (std::cin.fail() || newPosition < 1 || newPosition > 8) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Invalid input! Please enter a valid position (1-8).\n";
-            continue;
-        }
-    }
-}
+        getline(cin, choice); // Read user choice
 
+        if (choice == "1" && !looked) {
+            looked = true;
+            cout << "You examine the dusty painting. It depicts a family seated for dinner, viewed from a **top-down perspective**.\n";
+            cout << "The chairs are arranged in a particular order—something about it seems deliberate.\n";
+            cout << "Two chairs at the heads of the table have armrests.\n";
+            cout << "Counting counter-clockwise from the top, you note chairs 1 and 5 are captain chairs.\n";
+            cout << "Chairs 2, 5, and 8 are missing plate settings, and chair 8 is pushed against the window.\n";
+            cout << "The original seating arrangement might be key to solving this puzzle.\n";
+        } else if (choice == "2") {
+            int chairID, newPosition;
 
-
-        // Function to move a chair and update chandelier
-void movechair(Chair chairs[], int chairID, int newPosition, int &bulbsLit) {
-    for (int i = 0; i < 8; ++i) {
-        if (chairs[i].id == chairID) {
-            chairs[i].current_position = newPosition;
-            std::cout << "Chair " << chairID << " moved to position " << newPosition << ".\n";
-
-            // Check if it's correctly placed and hasn't already been counted
-            if (chairs[i].current_position == chairs[i].correct_position && !chairs[i].is_correct) {
-                chairs[i].is_correct = true;
-                bulbsLit++; // Light up one more bulb
-                std::cout << "Chair " << chairID << " is now correctly placed!\n";
-                std::cout << "A light bulb has lit up on the chandelier! (Bulbs lit: " << bulbsLit << "/8)\n";
+            cout << "Enter the chair number (1-8) you want to move: ";
+            cin >> chairID;
+            if (cin.fail() || chairID < 1 || chairID > 8) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input! Please enter a valid chair number (1-8).\n";
+                continue;
             }
-            return;
+
+            cout << "Enter the new position (1-8): ";
+            cin >> newPosition;
+            if (cin.fail() || newPosition < 1 || newPosition > 8) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input! Please enter a valid position (1-8).\n";
+                continue;
+            }
+
+            moveChair(chairs, chairID, newPosition, bulbsLit);
+
+            // **Check if puzzle is fully solved**
+            if (checkAllCorrect(chairs, bulbsLit)) {
+                puzzleSolved = true;
+                cout << "\nThe chandelier is **fully lit**! Ding! You solved the puzzle!\n";
+                cout << "A warm glow fills the room, and faint whispers of laughter and clinking dishes echo before fading into silence.\n";
+                cout << "**You find a hidden note under the table... It reads C____**\n";
+            }
+
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); //Fix input buffer issue
+        } else if (choice == "3") {
+            kitchen();
+            break;
+        } else {
+            cout << "Invalid choice.\n";
         }
     }
-    std::cout << "Invalid chair ID!\n";
 }
-
-//Function to check the chandelier (and the completion of the puzzle)
-void checkAllCorrect(int bulbsLit) {
-    if (bulbsLit == 8) {
-        std::cout << "\nThe chandelier is **fully lit**! 🎵 Ding! You solved the puzzle!\n";
-        std::cout << "As you step out of the room, you hear whispers of laughing, dishes clinking, and clear enjoyment of a grand dinner ... ";
-        std::cout << "the chandelier fades into darkness.\n";
-
-        // Reset bulbsLit (if needed)
-        bulbsLit = 0;
-    }
-}
-
