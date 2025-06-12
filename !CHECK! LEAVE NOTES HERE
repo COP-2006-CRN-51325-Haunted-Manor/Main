@@ -12,3 +12,6 @@ so i don't know if it will with the rest of the game.
   works if it was just that room in the coding enviornment, but int main is actually used all the way back up at the start of the code and then we call the rooms via functions declared so I think all I'll need to do is just condense your
   code into a single function and then add the movement options and it should be good. I'll adjust it later tonight and let you know! Pretty sure this is the same way that me and Ryan tried to do it originally but it ended up getting 
   messy and the functions started to break and not display things properly, the new movement code we're using is a bit extra specific so it can be a little confusing.
+
+6/11/25-Grace: I fixed my code. It did not take 20 minutes, but I was able to fix it and make it alot better. You guys are free to fuss with my code as needed. I did fix all of my clang tidy and any error messages. 
+So we should be good on my end for the functions working.
