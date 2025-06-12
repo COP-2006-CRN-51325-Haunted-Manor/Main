@@ -1,9 +1,14 @@
-
 //Functions declaration
 bool hasLooked = false;
+int bulbsLit;
+int newPosition;
+int chairID;
+int chairs;
+moveChair(chairs, chairID, newPosition, bulbsLit);
+
 
 //Entering the dining room. These are the descriptions of the dining room that way the player understands the layout and important info.
-void enterDiningRoom() {
+void dining_room() {
     std::cout << "You push open the grand dining room doors. A big gust of wind follows you and stirs up all the dust that had settled over the furniture.\n";
     std::cout << "You can spot massive cobwebs in the corner of the rooms and all over the chandelier that's in the middle of the room. \nYou wonder how long its been since a living soul has stepped into this room.\n";
     std::cout<<"Besides the chandelier, a table of 8 is set for what looks like a grand dinner.\n Most of the plate settings are still set on the table, but not all of them.\n";
@@ -31,8 +36,7 @@ void lookAround() {
 * Chair 3= chair 1 position, Chair 4=Chair 2 position, Chair 7 = Chair 3 position,	Chair 2 = Chair 4 position,	Chair 5 = Chair 5 position (the only correct one)
 	Chair 1= Chair 6 position, Chair 8 = Chair 7 position, Chair 6 = Chair 8 position
 
-Instead of the player getting a pop-up message telling them when they completed the puzzle, I went with the idea of the chandelier being slowly light up.
-Once the player lights up the chandelier, a message will pop up and I think it will add some atmosphere.
+In addition to the chairs, the chandelier will slowly light up, till it's completely lit up and then slowly fade to blackness.
  */
 
 // Function declarations for the chair structures
@@ -42,51 +46,23 @@ struct Chair {
     int correct_position;
     std::string special_identifier;
     bool is_correct; // Track if the chair is already placed correctly
+
 };
 
+
 // This is to initialize the chairs. You have the what's the current position, the correct and any special identifiers.
-void initializeChairs(Chair chairs[]) {
-    chairs[0] = {1, 3, 1, "captain seat with arms"}; //One head of the table
-    chairs[1] = {2, 4, 2, "missing plate setting"};
-    chairs[2] = {3, 7, 3, ""};
-    chairs[3] = {4, 2, 4, ""};
-    chairs[4] = {5, 5, 5, "captain seat with arms"}; //The other head of the table
-    chairs[5] = {6, 1, 6, ""};
-    chairs[6] = {7, 8, 7, ""};
-    chairs[7] = {8, 6, 8, "missing plate setting, pushed against the window"};
-}
+bool initializeChairs(Chair chairs[8]) {
+    chairs[0] = {1, 3, 1, "captain seat with arms", false}; //One head of the table
+    chairs[1] = {2, 4, 2, "missing plate setting", false};
+    chairs[2] = {3, 7, 3, "", false};
+    chairs[3] = {4, 2, 4, "", false};
+    chairs[4] = {5, 5, 5, "captain seat with arms",false}; //The other head of the table
+    chairs[5] = {6, 1, 6, "",false};
+    chairs[6] = {7, 8, 7, "",false};
+    chairs[7] = {8, 6, 8, "missing plate setting, pushed against the window",false};
 
-// Function to move a chair and update chandelier
-void moveChair(Chair chairs[], int chairID, int newPosition, int &bulbsLit) {
-    for (int i = 0; i < 8; ++i) {
-        if (chairs[i].id == chairID) {
-            chairs[i].current_position = newPosition;
-            std::cout << "Chair " << chairID << " moved to position " << newPosition << ".\n";
 
-            // Check if it's correctly placed and hasn't already been counted
-            if (chairs[i].current_position == chairs[i].correct_position && !chairs[i].is_correct) {
-                chairs[i].is_correct = true;
-                bulbsLit++; // Light up one more bulb
-                std::cout << "Chair " << chairID << " is now correctly placed!\n";
-                std::cout << "A light bulb has lit up on the chandelier! (Bulbs lit: " << bulbsLit << "/8)\n";
-            }
-            return;
-        }
-    }
-    std::cout << "Invalid chair ID!\n";
-}
-
-// Function to check if all chairs are correct
-bool checkAllCorrect(int bulbsLit) {
-    return bulbsLit == 8;
-}
-
-// Main function with interactive input
-int main() {
-    Chair chairs[8];
-    initializeChairs(chairs);
-    int bulbsLit = 0; // Track chandelier bulbs
-
+    //Function to move the chairs. It takes user input.
     while (true) {
         std::cout << "\nEnter the chair number (1-8) you want to move: ";
         int chairID, newPosition;
@@ -107,18 +83,39 @@ int main() {
             std::cout << "Invalid input! Please enter a valid position (1-8).\n";
             continue;
         }
+    }
+}
 
-        moveChair(chairs, chairID, newPosition, bulbsLit);
 
-        // Check if puzzle is solved
-        if (checkAllCorrect(bulbsLit)) {
-            std::cout << "\nThe chandelier is **fully lit**! 🎵 Ding! You solved the puzzle!\n";
-            std::cout << "As you step out of the room, you hear whispers of laughing, dishes clinking, and clear enjoyment of a grand dinner ... "
-                         "the chandelier fades into darkness.\n";
 
-            break; // Exit the loop once solved
+        // Function to move a chair and update chandelier
+void movechair(Chair chairs[], int chairID, int newPosition, int &bulbsLit) {
+    for (int i = 0; i < 8; ++i) {
+        if (chairs[i].id == chairID) {
+            chairs[i].current_position = newPosition;
+            std::cout << "Chair " << chairID << " moved to position " << newPosition << ".\n";
+
+            // Check if it's correctly placed and hasn't already been counted
+            if (chairs[i].current_position == chairs[i].correct_position && !chairs[i].is_correct) {
+                chairs[i].is_correct = true;
+                bulbsLit++; // Light up one more bulb
+                std::cout << "Chair " << chairID << " is now correctly placed!\n";
+                std::cout << "A light bulb has lit up on the chandelier! (Bulbs lit: " << bulbsLit << "/8)\n";
+            }
+            return;
         }
     }
+    std::cout << "Invalid chair ID!\n";
+}
 
-    return 0;
+//Function to check the chandelier (and the completion of the puzzle)
+void checkAllCorrect(int bulbsLit) {
+    if (bulbsLit == 8) {
+        std::cout << "\nThe chandelier is **fully lit**! 🎵 Ding! You solved the puzzle!\n";
+        std::cout << "As you step out of the room, you hear whispers of laughing, dishes clinking, and clear enjoyment of a grand dinner ... ";
+        std::cout << "the chandelier fades into darkness.\n";
+
+        // Reset bulbsLit (if needed)
+        bulbsLit = 0;
+    }
 }
