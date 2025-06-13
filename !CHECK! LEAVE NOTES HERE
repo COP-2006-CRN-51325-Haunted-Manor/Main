@@ -18,4 +18,5 @@ So we should be good on my end for the functions working. Side note: for the mus
 music note the player gets into those messages with no problem.
 
 6/13/25 Wata- I've finished integrating my code with the main code and I'm going to start working on slides. I'm very tired right now, I haven't been able to test everything, I just know that my code doesn't blow up the whole program
-and seems to cooperate with it quite well.
+and seems to cooperate with it quite well. I also created another file called testbuild deluxe with my code integrated into it.
+
