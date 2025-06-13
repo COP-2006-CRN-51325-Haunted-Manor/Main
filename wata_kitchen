@@ -28,7 +28,7 @@ void kitchen() {
     cin>>choiceKitchen;
     if (choiceKitchen==1) {//enter dining
         if (blowCandles==false&&tryBarrier==false) {
-            cout<<"\nThe hum grows stronger as you approach the fog.\n"
+            cout<<"\nThe hum grows stronger as you approach the fog. It sings in a low E note.\n"
                   "You lead with your hand, but a single finger is enough for your entire arm to spasm uncontrollably, and your vision grows dark from the numbing pain.\n"
             <<"It takes nearly all of your weight to pull your hand out from the barrier, causing you fall to the floor to catch your breath.\n"
             <<"You wonder what could be inducing such a strong force barrier...\n";
