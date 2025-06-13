@@ -180,9 +180,7 @@ void kitchen() {
             kitchen();
         }
         if (blowCandles==true) {
-            cout<<"\nAs the first candle dims, you notice the barrier's hum grow softer.\n"
-                  "You continue until all five candles have been extinguished.\n"
-                  "The dense fog covering the doorway disperses, revealing an entry into the dining room.\n";
+            cout<<"\nThe dense fog covering the doorway disperses, revealing an entry into the dining room.\n";
             cout<<"\n1. Enter dining room"
                   "\n2. Stay in kitchen"
                   "\nChoice: ";
