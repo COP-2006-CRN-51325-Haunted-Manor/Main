@@ -16,3 +16,6 @@ so i don't know if it will with the rest of the game.
 6/11/25-Grace: I fixed my code. It did not take 20 minutes, but I was able to fix it and make it alot better. You guys are free to fuss with my code as needed. I did fix all of my clang tidy and any error messages. 
 So we should be good on my end for the functions working. Side note: for the music note, I didn't put what music note the player gets, but there are some pop messages the player gets completes the puzzle. You should be able to add the specifc 
 music note the player gets into those messages with no problem.
+
+6/13/25 Wata- I've finished integrating my code with the main code and I'm going to start working on slides. I'm very tired right now, I haven't been able to test everything, I just know that my code doesn't blow up the whole program
+and seems to cooperate with it quite well.
